@@ -74,6 +74,9 @@ filename.
                           Specify where to store on local filesystem
     -x EXCLUDE_TABLES, --exclude-tables=EXCLUDE_TABLES
                           Exclude tables data from backup (-x 'public.table1, public.table2')
+    -O --no-owner,        Do not output commands to set ownership of objects to match the original database.
+    -X --no-privileges,   Prevent dumping of access privileges (grant/revoke commands).
+
 
 dbrestore
 ---------
@@ -102,6 +105,8 @@ different server. You may also specify an explicit local file to backup from.
     -p PASSPHRASE, --passphrase=PASSPHRASE
                           Passphrase for decrypt file
     -z, --uncompress      Uncompress gzip data before restoring
+    -O --no-owner,        Do not output commands to set ownership of objects to match the original database.
+    -X --no-privileges,   Prevent restoration of access privileges (grant/revoke commands).
 
 
 mediabackup

@@ -46,6 +46,12 @@ class PgDumpConnector(BaseCommandDBConnector):
         if self.drop:
             cmd += " --clean"
 
+        if self.no_owner:
+            cmd += " --no-owner"
+
+        if self.no_privileges:
+            cmd += " --no-acl"
+
         if self.schemas:
             # First schema is not prefixed with -n
             # when using join function so add it manually.
@@ -67,6 +73,12 @@ class PgDumpConnector(BaseCommandDBConnector):
 
         if self.single_transaction:
             cmd += " --single-transaction"
+
+        if self.no_owner:
+            cmd += " --no-owner"
+
+        if self.no_privileges:
+            cmd += " --no-acl"
 
         cmd += " {}".format(self.settings["NAME"])
         cmd = f"{self.restore_prefix} {cmd} {self.restore_suffix}"
@@ -124,6 +136,12 @@ class PgDumpBinaryConnector(PgDumpConnector):
         if self.schemas:
             cmd += " -n " + " -n ".join(self.schemas)
 
+        if self.no_owner:
+            cmd += " --no-owner"
+
+        if self.no_privileges:
+            cmd += " --no-acl"
+
         cmd = f"{self.dump_prefix} {cmd} {self.dump_suffix}"
         stdout, _ = self.run_command(cmd, env=self.dump_env)
         return stdout
@@ -140,6 +158,12 @@ class PgDumpBinaryConnector(PgDumpConnector):
 
         if self.schemas:
             cmd += " -n " + " -n ".join(self.schemas)
+
+        if self.no_owner:
+            cmd += " --no-owner"
+
+        if self.no_privileges:
+            cmd += " --no-acl"
 
         cmd = f"{self.restore_prefix} {cmd} {self.restore_suffix}"
         stdout, stderr = self.run_command(cmd, stdin=dump, env=self.restore_env)

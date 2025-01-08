@@ -67,6 +67,21 @@ class Command(BaseDbBackupCommand):
             default=[],
             help="Specify schema(s) to backup. Can be used multiple times.",
         ),
+        make_option(
+            "-O",
+            "--no-owner",
+            action="store_true",
+            default=False,
+            help="Do not output commands to set ownership of objects to match the original database.",
+        ),
+        make_option(
+            "-X",
+            "--no-privileges",
+            "--no-acl",
+            action="store_true",
+            default=False,
+            help="Prevent dumping of access privileges (grant/revoke commands).",
+        ),
     )
 
     @utils.email_uncaught_exception
@@ -86,6 +101,9 @@ class Command(BaseDbBackupCommand):
         self.exclude_tables = options.get("exclude_tables")
         self.storage = get_storage()
         self.schemas = options.get("schema")
+
+        self.no_owner = options.get("no_owner")
+        self.no_privileges = options.get("no_privileges")
 
         self.database = options.get("database") or ""
 

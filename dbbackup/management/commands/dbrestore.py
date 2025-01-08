@@ -60,6 +60,21 @@ class Command(BaseDbBackupCommand):
             default=False,
             help="Don't clean (drop) the database. This only works with mongodb and postgresql.",
         ),
+        make_option(
+            "-O",
+            "--no-owner",
+            action="store_true",
+            default=False,
+            help="Do not output commands to set ownership of objects to match the original database.",
+        ),
+        make_option(
+            "-X",
+            "--no-privileges",
+            "--no-acl",
+            action="store_true",
+            default=False,
+            help="Prevent restoration of access privileges (grant/revoke commands).",
+        ),
     )
 
     def handle(self, *args, **options):
@@ -84,6 +99,9 @@ class Command(BaseDbBackupCommand):
             self.storage = get_storage()
             self.no_drop = options.get("no_drop")
             self.schemas = options.get("schema")
+
+            self.no_owner = options.get("no_owner")
+            self.no_privileges = options.get("no_privileges")
             self._restore_backup()
         except StorageError as err:
             raise CommandError(err) from err
