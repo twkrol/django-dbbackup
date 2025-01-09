@@ -97,7 +97,6 @@ class Command(BaseDbBackupCommand):
             self.storage = get_storage()
             self.no_drop = options.get("no_drop")
             self.schemas = options.get("schema")
-
             self.no_owner = options.get("no_owner")
             self.no_privileges = options.get("no_privileges")
             self._restore_backup()
@@ -156,5 +155,7 @@ class Command(BaseDbBackupCommand):
         self.connector = get_connector(self.database_name)
         if self.schemas:
             self.connector.schemas = self.schemas
+        self.connector.no_owner = self.no_owner
+        self.connector.no_privileges = self.no_privileges
         self.connector.restore_dump(input_file)
         self.connector.drop = not self.no_drop

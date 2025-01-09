@@ -133,6 +133,9 @@ class Command(BaseDbBackupCommand):
         if self.schemas:
             self.connector.schemas = self.schemas
 
+        self.connector.no_owner = self.no_owner
+        self.connector.no_privileges = self.no_privileges
+
         outputfile = self.connector.create_dump()
 
         # Apply trans
