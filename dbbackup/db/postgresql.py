@@ -35,6 +35,8 @@ class PgDumpConnector(BaseCommandDBConnector):
     single_transaction = True
     drop = True
     schemas: Optional[List[str]] = []
+    no_owner = False
+    no_privileges = False
 
     def _create_dump(self):
         cmd = f"{self.dump_cmd} "

@@ -61,14 +61,12 @@ class Command(BaseDbBackupCommand):
             help="Don't clean (drop) the database. This only works with mongodb and postgresql.",
         ),
         make_option(
-            "-O",
             "--no-owner",
             action="store_true",
             default=False,
             help="Do not output commands to set ownership of objects to match the original database.",
         ),
         make_option(
-            "-X",
             "--no-privileges",
             "--no-acl",
             action="store_true",
